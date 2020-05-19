@@ -6,14 +6,15 @@ const customErrorHandler = (err, req, res, next) => {
     if (err.name === "SyntaxError") {
         customError = new CustomError("Unexpected Syntax", 400);
     }
-    if (err.name === "MongoError") {
-        customError = new CustomError(err.message, 400);
+    if (err.code === 11000) {
+        customError = new CustomError("Duplicate Key Found: Check Your Input", 400);
     }
     console.log(customError.message, customError.status)
     res
-    .status(400)
+    .status(customError.status || 500)
     .json({
-        success: false
+        success: false,
+        message: customError.message || "Internal server error"
     })
 }
 

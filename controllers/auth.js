@@ -1,36 +1,37 @@
 const User = require('../models/users')
 const CustomError = require('../helpers/error/CustomError')
-const register = async (req, res, next) => {
+const asyncErrorWrapper = require('express-async-handler')
+
+// A better error handler then try-catch (express-async-handler)
+const register = asyncErrorWrapper(async (req, res, next) => {
     //Post Data
-    const name = "Murat Coly";
-    const email = "lock.ddd@gmail.com";
-    const password = "1233456"
 
-    //async await
+ 
+        const {name,email,password,role} = req.body;
 
-    try {
         const user = await User.create({
             name,
             email,
-            password
+            password,
+            role
         });
+        const token = user.generateJwtFromUser();
+        console.log(token);
+
+ 
+
         res
         .status(200)
         .json({
             success: true,
             data : user
         })
-    }
-    catch (err) {
-        return next(err);
-    }
+});
 
-
-};
 
 const errorTest = (req, res, next) => {
     //Question doesn't exist
-    return next(new SyntaxError())
+    return next(new TypeError())
     // return next(new Error("Program explode"));
 }
 

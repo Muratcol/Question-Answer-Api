@@ -13,6 +13,10 @@ dotenv.config({
 connectDatabase();
 
 const app = express();
+// Express - Body Middleware
+app.use(express.json());
+
+
 const PORT = process.env.PORT; // in case deployment
 
 //Routers Middleware
