@@ -76,14 +76,16 @@ userSchema.pre("save", function(next) {
         next();
     }
     bcrypt.genSalt(10, (err,salt) => {
+
         if(err) next(err);
         bcrypt.hash(this.password, salt, (err, hash) => {
             if(err) next(err);
             this.password = hash;
             next();         
-        })
-    })
-    next();
-})
+        });
+    });
+});
+
+
 
 module.exports = mongoose.model("User", userSchema);
