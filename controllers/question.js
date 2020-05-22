@@ -26,16 +26,94 @@ const getAllQuestions = asyncErrorWrapper( async (req, res, next) => {
     .json({
         success:true,
         data:allQuestions
+    });
+});
+const getOneQuestion = asyncErrorWrapper( async (req, res, next) => {
+
+    const question = req.data;
+
+    return res.status(200)
+    .json({
+        success: true,
+        data: question
     })
+});
+
+const editQuestion = asyncErrorWrapper( async (req, res, next) => {
+
+    let information = req.body;
+    const {id} = req.params;
+
+    const question = await Question.findByIdAndUpdate(id, information, {
+        new:true,
+        runValidators:true
+    });
+
+    await question.save();
+
+    return res.status(200)
+    .json({
+        success: true,
+        message: "Update Succesfull"
+    })
+});
+
+const deleteQuestion = asyncErrorWrapper( async (req, res, next) => {
+    const {id} = req.params;
+    const question = await Question.findById(id);
+    await question.remove();
+
+    return res.status(200)
+    .json({
+        success:true,
+        message: "Question deleted from database"
+    });
+});
+
+const likeQuestion = asyncErrorWrapper( async (req, res, next) => {
+    const {id} = req.params;
+    const question = await Question.findById(id);
+    if (question.likes.includes(req.user.id)) {
+
+        let index = question.likes.indexOf(req.user.id);
+        question.likes.splice(index, 1);
+
+        await question.save();
+
+        return res.status(200)
+        .json({
+            success: true,
+            message: "Question Unliked"
+    });
+    }
+    else {
+        
+        question.likes.push(req.user.id);
+
+        await question.save();
+
+        return res.status(200)
+        .json({
+            success: true,
+            message: "Question Liked"
+        });
+
+    };
+
+});
 
 
 
 
 
 
-})
+
 
 module.exports = {
     askNewQuestion,
-    getAllQuestions
+    getAllQuestions,
+    getOneQuestion,
+    editQuestion,
+    deleteQuestion,
+    likeQuestion
 }

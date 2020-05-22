@@ -23,7 +23,11 @@ const QuestionSchema = new Schema({
         type: mongoose.Schema.ObjectId,
         required:true,
         ref: "users"
-    }
+    },
+    likes: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "users"
+        }]
 });
 
 // Mongoose pre save hook function. Slugify question's title field
@@ -41,6 +45,9 @@ QuestionSchema.methods.makeSlug = function(){
         lower: true
     });
 };
+
+
+
 
 
 module.exports = mongoose.model("Question", QuestionSchema);
