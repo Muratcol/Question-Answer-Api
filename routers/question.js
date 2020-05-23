@@ -1,7 +1,8 @@
 const express = require('express');
 const {askNewQuestion, getAllQuestions, getOneQuestion, editQuestion, deleteQuestion, likeQuestion} = require("../controllers/question");
 const {getAccessToRoute, getQuestionOwnerAccess} = require('../middlewares/authorization/auth');
-const {checkQuestionExist} = require('../middlewares/database/databaseErrorHelpers')
+const {checkQuestionExist} = require('../middlewares/database/databaseErrorHelpers');
+// const answer = require('./answer')
 // api/questions route will come here.
 
 
@@ -13,6 +14,7 @@ router.get("/:id", checkQuestionExist, getOneQuestion);
 router.put("/:id/edit", [getAccessToRoute, checkQuestionExist, getQuestionOwnerAccess], editQuestion);
 router.delete("/:id/delete", [getAccessToRoute, checkQuestionExist, getQuestionOwnerAccess], deleteQuestion);
 router.get("/:id/like", [getAccessToRoute, checkQuestionExist], likeQuestion);
+// router.use("/:id/answer", answer)
 // export {router as questionRouter}
 
 module.exports = router;

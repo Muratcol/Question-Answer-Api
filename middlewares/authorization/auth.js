@@ -2,8 +2,10 @@ const CustomError = require('../../helpers/error/CustomError');
 const jwt = require('jsonwebtoken');
 const {isTokenIncluded, getAccessTokenFromHeader} = require('../../helpers/authorization/tokenHelpers');
 const asyncErrorWrapper = require('express-async-handler');
-const User = require('../../models/users')
-const Question = require('../../models/Question')
+const User = require('../../models/users');
+const Question = require('../../models/Question');
+const Answer = require('../../models/Answer');
+
 
 const getAccessToRoute = (req, res, next) => {
     const {JWT_SECRET_KEY} = process.env;
@@ -42,8 +44,19 @@ const getQuestionOwnerAccess = asyncErrorWrapper (async(req, res, next) => {
     if (question.user != userId) return next(new CustomError("Only question's owner can edit this question", 403))
 
     next();
+});
 
-})
+const getAnswerOwnerAccess = asyncErrorWrapper (async(req, res, next) => {
+
+    const userId = req.user.id;
+    const answerId = req.params.answerid;
+    const answer = await Answer.findById(answerId);
+
+    if (answer.user != userId) return next(new CustomError("Only answer's owner can edit this question", 403))
+
+    next();
+});
+
 
 
 
@@ -51,5 +64,6 @@ const getQuestionOwnerAccess = asyncErrorWrapper (async(req, res, next) => {
 module.exports = {
     getAccessToRoute,
     getAdminAccess,
-    getQuestionOwnerAccess
+    getQuestionOwnerAccess,
+    getAnswerOwnerAccess
 };
