@@ -40,7 +40,7 @@ const editAnswer = asyncErrorWrapper( async (req, res, next) => {
     });
 });
 
-const deleteAnswer = asyncErrorWrapper( async (req, res, next) => {
+const deleteAnswer = asyncErrorWrapper(async (req, res, next) => {
     const {answerid} = req.params;
     const answer = await Answer.findById(answerid);
     await answer.remove();
@@ -51,7 +51,45 @@ const deleteAnswer = asyncErrorWrapper( async (req, res, next) => {
     });
 });
 
+const likeAnswer = asyncErrorWrapper(async (req, res, next) => {
+    const {answerid} = req.params;
+    const answer = await Answer.findById(answerid);
+    if (answer.likes.includes(req.user.id)) {
+        let index = answer.likes.indexOf(req.user.id);
+        answer.likes.splice(index, 1);
+        await answer.save();
 
+        return res.status(200)
+        .json({
+            success: true,
+            data: answer.likes
+        });
+    }
+    else {
+        answer.likes.push(req.user.id);
+        await answer.save();
+        return res.status(200)
+        .json({
+            success: true,
+            data: answer.likes
+        });
+    }
+});
+
+const getAllAnswers = asyncErrorWrapper(async (req, res, next) => {
+    const {id} = req.params;
+    const answers = await Answer.find({
+        question: id
+    });
+    if (answers.length === 0) return next(new CustomError("There's no answer for this question yet", 404))
+
+    return res.status(200)
+        .json({
+            success: true,
+            data: answers
+        });
+
+});
 
 
 
@@ -60,5 +98,7 @@ const deleteAnswer = asyncErrorWrapper( async (req, res, next) => {
 module.exports = {
     answerToQuestion,
     editAnswer,
-    deleteAnswer
-}
+    deleteAnswer,
+    likeAnswer,
+    getAllAnswers
+};
