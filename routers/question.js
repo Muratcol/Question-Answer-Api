@@ -3,6 +3,7 @@ const {askNewQuestion, getAllQuestions, getOneQuestion, editQuestion, deleteQues
 const {getAccessToRoute, getQuestionOwnerAccess} = require('../middlewares/authorization/auth');
 const {checkQuestionExist} = require('../middlewares/database/databaseErrorHelpers');
 const questionQueryMiddleware = require('../middlewares/query/questionQueryMiddleware');
+const {answerQueryMiddleware} = require('../middlewares/query/answerQueryMiddleware');
 const Question = require('../models/Question')
 // const answer = require('./answer')
 
@@ -22,7 +23,18 @@ router.get("/", questionQueryMiddleware(
         }
     }
 ), getAllQuestions);
-router.get("/:id", checkQuestionExist, getOneQuestion);
+router.get("/:id", checkQuestionExist, answerQueryMiddleware(Question, {
+    population: [
+        {
+            path: "user",
+            select: "name profile_image"
+        },
+        {
+            path: "answers",
+            select: "content"
+        }
+    ]
+}), getOneQuestion);
 router.put("/:id/edit", [getAccessToRoute, checkQuestionExist, getQuestionOwnerAccess], editQuestion);
 router.delete("/:id/delete", [getAccessToRoute, checkQuestionExist, getQuestionOwnerAccess], deleteQuestion);
 router.get("/:id/like", [getAccessToRoute, checkQuestionExist], likeQuestion);
