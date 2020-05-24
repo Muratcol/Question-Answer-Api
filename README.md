@@ -11,4 +11,11 @@ npm run dev
 go to "helpers" > "libraries" > "sendEmail.js" and give your own gmail username and password
 
 
-Later, go to https://localhost:5000
+Later, send requests to program via Postman.
+
+
+# Using Dummy-Generator
+
+npm run --import // with this command you are able to upload all dummy contents to MongoDB whiches under the dummy directory.
+
+npm run --delete // Format everything in MongoDB 
