@@ -18,57 +18,8 @@ const askNewQuestion = asyncErrorWrapper( async (req, res, next) => {
     })
 });
 const getAllQuestions = asyncErrorWrapper( async (req, res, next) => {
-    const populate = true;
-    const populateObject = {
-        path: "user",
-        select: "name profile_image"
-        
-    };
-    let query = Question.find();
-    if (req.query.search) {
-        const searchObject = {};
-        const regex = new RegExp(req.query.search, "i");
-        searchObject["title"] = regex;
-        query = query.where(searchObject);         
-    }
-
-    //Populate function. This is complicated
-    if (populate) {
-        query.populate(populateObject)
-    }
-        //Pagination
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
-
-    const startIndex = (page-1) * limit;
-    const endIndex = page * limit;
-
-    const pagination = {};
-    const total = await Question.countDocuments();
-    if (startIndex > 0) {
-        pagination.previous = {
-            page: page-1,
-            limit: limit
-        }
-    }
-    if (endIndex < total) {
-        pagination.next = {
-            page: page+1,
-            limit: limit
-        }
-    }
-
-    query = query.skip(startIndex).limit(limit);
-
-    const questions = await query;
-    if (questions.length === 0) return next(new CustomError("There is no question in database yet", 404))
     return res.status(200)
-    .json({
-        success:true,
-        count: questions.length,
-        pagination: pagination,
-        data: questions
-    })
+    .json(res.queryResults)
 });
 
 const getOneQuestion = asyncErrorWrapper( async (req, res, next) => {
