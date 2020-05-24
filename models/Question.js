@@ -22,12 +22,24 @@ const QuestionSchema = new Schema({
     user: {
         type: mongoose.Schema.ObjectId,
         required:true,
-        ref: "users"
+        ref: "User"
     },
     likes: [{
         type: mongoose.Schema.ObjectId,
-        ref: "users"
-        }]
+        ref: "User"
+        }],
+    answers: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "Answer"
+    }],
+    answersCounter: {
+        default: 0,
+        type: Number
+        
+    },
+    likesCounter: {
+        type: Number
+    }
 });
 
 // Mongoose pre save hook function. Slugify question's title field

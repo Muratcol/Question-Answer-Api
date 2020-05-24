@@ -1,7 +1,7 @@
 const Answer = require('../models/Answer');
 const asyncErrorWrapper = require('express-async-handler');
 const CustomError = require('../helpers/error/CustomError');
-
+const Question = require('../models/Question')
 
 const answerToQuestion = asyncErrorWrapper(async (req, res, next) =>{
     
@@ -13,6 +13,13 @@ const answerToQuestion = asyncErrorWrapper(async (req, res, next) =>{
         user: req.user.id,
         question: id
     });
+    
+    const question = await Question.findById(id);
+
+    question.answers.push(answer._id);
+    question.answersCounter = question.answers.length;
+    await question.save()
+
     return res.status(200)
     .json({
         success:true,
@@ -43,7 +50,12 @@ const editAnswer = asyncErrorWrapper( async (req, res, next) => {
 const deleteAnswer = asyncErrorWrapper(async (req, res, next) => {
     const {answerid} = req.params;
     const answer = await Answer.findById(answerid);
+    const question = await Question.findById(id);
+    let index = question.indexOf(answerid);
+    question.splice(index, 1)
+    question.answersCounter = question.answers.length;
     await answer.remove();
+    await question.save();
     return res.status(200)
     .json({
         success: true,
@@ -57,6 +69,7 @@ const likeAnswer = asyncErrorWrapper(async (req, res, next) => {
     if (answer.likes.includes(req.user.id)) {
         let index = answer.likes.indexOf(req.user.id);
         answer.likes.splice(index, 1);
+        answer.likesCounter = answer.likes.length;
         await answer.save();
 
         return res.status(200)
@@ -67,6 +80,7 @@ const likeAnswer = asyncErrorWrapper(async (req, res, next) => {
     }
     else {
         answer.likes.push(req.user.id);
+        answer.likesCounter = answer.likes.length;
         await answer.save();
         return res.status(200)
         .json({

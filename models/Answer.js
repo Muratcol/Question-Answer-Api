@@ -17,7 +17,7 @@ const answerSchema = new Schema({
     user: {
         type: mongoose.Schema.ObjectId,
         required:true,
-        ref: "users"
+        ref: "User"
     },
     question: {
         type: mongoose.Schema.ObjectId,
@@ -26,8 +26,11 @@ const answerSchema = new Schema({
     },
     likes: [{
         type: mongoose.Schema.ObjectId,
-        ref: "users"
-        }]
+        ref: "User"
+        }],
+    likesCounter: {
+        type:Number
+    }
 });
 
 
