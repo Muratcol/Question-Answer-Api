@@ -1,5 +1,5 @@
 # Question-Answer-Api
-A basic version of StackOverflow. Developed with ExpressJs
+A basic version of StackOverflow. Developing with ExpressJs
 
 
 To use project execute following commands:
