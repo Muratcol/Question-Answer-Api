@@ -3,10 +3,9 @@ const {searchHelper, populateHelper, paginationHelper, questionSortHelper} = req
 
 const questionQueryMiddleware = function(model, options) {
     return asyncErrorWrapper( async function (req, res, next) {
-        // Initial Query
+
         let query = model.find();
 
-        //Search
         query = searchHelper("title", query, req);
         if (options && options.population) {
             query = populateHelper(query, options.population);
@@ -14,7 +13,8 @@ const questionQueryMiddleware = function(model, options) {
 
         query = questionSortHelper(query, req);
 
-        const paginationResult = await paginationHelper(model, query, req);
+        const total = await model.countDocuments();
+        const paginationResult = await paginationHelper(total, query, req);
 
         query = paginationResult.query;
         const pagination = paginationResult.pagination;
