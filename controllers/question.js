@@ -95,9 +95,6 @@ const likeQuestion = asyncErrorWrapper( async (req, res, next) => {
 
 
 
-
-
-
 module.exports = {
     askNewQuestion,
     getAllQuestions,
