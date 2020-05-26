@@ -59,49 +59,20 @@
           <div class="w3-half w3-container">
 
             <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+              <% for(var i=0; i < 6; i++) { %>       
               <tr>
-                <td>(USD) Amerikan Doları </td>
-                <td>{{doviz.USDALIS}}</td>
-                <td>{{doviz.USDSATIS}}</td>
-                <td>{{doviz.USDYUKSEK}}</td>
-                <td>{{doviz.USDDUSUK}}</td>
+                <td><%=  bigdata[i].name  %></td>
+                <td><%=  bigdata[i].alis  %></td>
+                <td><%=  bigdata[i].satis  %></td>
+                <td><%=  bigdata[i].yuksek  %></td>
+                <td><%=  bigdata[i].dusuk  %></td>
+                <td><%=  bigdata[i].degisim  %></td>
+                <td><%=  bigdata[i].update  %></td>
               </tr>
-              <tr>
-                <td>(EUR) EURO </td>
-                <td>{{doviz.EURALIS}}</td>
-                <td>{{doviz.EURSATIS}}</td>
-                <td>{{doviz.EURYUKSEK}}</td>
-                <td>{{doviz.EURDUSUK}}</td>
-              </tr>
-              <tr>
-                <td>(GBP) Britanya Poundu</td>
-                <td>{{doviz.GBPALIS}}</td>
-                <td>{{doviz.GBPSATIS}}</td>
-                <td>{{doviz.GBPYUKSEK}}</td>
-                <td>{{doviz.GBPDUSUK}}</td>
-              </tr>
-              <tr>
-                <td>(SEK) Isveç Kronu</td>
-                <td>{{doviz.SEKALIS}}</td>
-                <td>{{doviz.SEKSATIS}}</td>
-                <td>{{doviz.SEKYUKSEK}}</td>
-                <td>{{doviz.SEKDUSUK}}</td>
-              </tr>
-              <tr>
-                <td>(NOK) Norveç Kronu</td>
-                <td>{{doviz.NOKALIS}}</td>
-                <td>{{doviz.NOKSATIS}}</td>
-                <td>{{doviz.NOKYUKSEK}}</td>
-                <td>{{doviz.NOKDUSUK}}</td>
-              </tr>
-              <tr>
-                <td>(RUB) Rus Rublesi</td>
-                <td>{{doviz.RUBALIS}}</td>
-                <td>{{doviz.RUBSATIS}}</td>
-                <td>{{doviz.RUBYUKSEK}}</td>
-                <td>{{doviz.RUBDUSUK}}</td>
-              </tr>
+              <% } %>
+              <!-- setInterval(function(){ alert("Hello"); }, 3000); -->
             </table><br>
+            
             <button class="w3-button w3-dark-grey" style="margin-bottom: 20px;">Diğer Kurlar  <i class="fa fa-arrow-right"></i></button>
           </div>
           <div class="w3-half w3-container">
