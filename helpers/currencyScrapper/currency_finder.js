@@ -34,8 +34,7 @@ const Scrapping = asyncErrorWrapper(async (req, res, next) =>{
     }
     // connectDatabase();
     // Currency.create(bigdata);
-    res.status(200)
-    .render('home/home', {bigdata: bigdata})
+    return bigdata
     
     // resolve(bigdata)
     })
