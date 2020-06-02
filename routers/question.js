@@ -23,6 +23,8 @@ router.get("/", questionQueryMiddleware(
         }
     }
 ), getAllQuestions);
+
+
 router.get("/:id", checkQuestionExist, answerQueryMiddleware(Question, {
     population: [
         {

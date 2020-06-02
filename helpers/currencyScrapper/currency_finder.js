@@ -8,7 +8,7 @@ let allCurrencies = new Array();
 const getAllCurrencies = asyncErrorWrapper(async (req, res, next) => {
   let url = "https://kur.doviz.com/";
   let response;
-
+  allCurrencies = [];
   response = await axios.get(url);
   const $ = await cheerio.load(response.data);
   let denemeler = await $("#currencies tbody tr");
@@ -26,12 +26,12 @@ const getAllCurrencies = asyncErrorWrapper(async (req, res, next) => {
       alis: alis,
       satis: satis,
       yuksek: yuksek,
-      dusuk,
-      dusuk,
+      dusuk : dusuk,
       degisim: degisim,
       update: update,
     });
   }
+  
   return res.status(200).json({
     success: true,
     data: allCurrencies,
