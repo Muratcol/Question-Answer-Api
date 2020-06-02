@@ -1,12 +1,21 @@
 const express = require('express');
-const path = require('path');
-const {Scrapping} = require('../helpers/currencyScrapper/currency_finder');
-const {homePage} = require('../controllers/home')
 
 const router = express.Router();
+// Block User
 
 
-router.get("/", homePage);
+
+router.get("", (req,res) => {
+    res.send(
+        `<h3>Welcome to the Currency API</h3>`
+    )
+});
+
+
+
+
+
+
 
 
 

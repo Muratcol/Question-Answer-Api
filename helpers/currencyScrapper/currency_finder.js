@@ -10,8 +10,8 @@ const Currency = require("../../models/Currency");
 
 const Scrapping = asyncErrorWrapper(async (req, res, next) =>{
     
-  axios.get("https://kur.doviz.com/").then((response) => {
-    const $ = cheerio.load(response.data)
+  axios.get("https://kur.doviz.com/").then(async (response) => {
+    const $ = await cheerio.load(response.data)
     let denemeler = $('#currencies tbody tr')    
     for (let i = 1; i < denemeler.length+1 ; i++) {
         if ((i === 12) | (i === 6)) continue
@@ -34,11 +34,13 @@ const Scrapping = asyncErrorWrapper(async (req, res, next) =>{
     }
     // connectDatabase();
     // Currency.create(bigdata);
-    return bigdata
-    
-    // resolve(bigdata)
+    // return bigdata
+    resolve(bigdata)
+    // return bigdata
     })
 });   
+
+console.log(Scrapping())
 
 
 module.exports = {
