@@ -7,7 +7,7 @@ const Question = require('./Question')
 const userSchema = new Schema({
     name : {
         type: String,
-        required: [true, "Please provide a name"],
+        required: [true, "Please provide a name"], 
     }, // String is shorthand for {type: String}
     email : {
         type: String,
@@ -25,7 +25,8 @@ const userSchema = new Schema({
     },
     password : {
         type: String,
-        minlength: [6, "Please proivde a password with min length 6"],
+        minlength: [6, "Please provide a password with min length 6"],
+        maxlength: [15, "Please provide a password with max length 15"],
         required: [true, 'Please provide a password'],
         select: false
     },

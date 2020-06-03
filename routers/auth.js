@@ -1,12 +1,14 @@
 const express = require('express');
 const {register, getUser, login, logout, imageUpload, forgotPassword, resetpassword, editDetails} = require('../controllers/auth');
 const {getAccessToRoute} = require('../middlewares/authorization/auth')
-const profileImageUpload = require('../middlewares/libraries/profileImageUpload')
+const profileImageUpload = require('../middlewares/libraries/profileImageUpload');
+const cors  = require('cors')
 // api/auth will come here 
 
 
 const router = express.Router();
 // router.post("URL", MIDDLEWARE, CONTROLLER)
+router.use(cors())
 router.post("/register", register);
 router.get('/profile', getAccessToRoute, getUser);
 router.post('/login', login);

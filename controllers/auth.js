@@ -5,6 +5,7 @@ const {sendJwtToClient} = require('../helpers/authorization/tokenHelpers');
 const {validateUserInput, comparePassword} = require('../helpers/inputs/inputHelpers');
 const sendEmail = require('../helpers/libraries/sendEmail');
 // A better error handler then try-catch (express-async-handler)
+
 const register = asyncErrorWrapper(async (req, res, next) => {
     //Post Data
     const {name,email,password,role} = req.body;

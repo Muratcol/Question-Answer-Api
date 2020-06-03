@@ -1,11 +1,14 @@
 const express = require("express");
+const cors = require('cors')
+
 const router = express.Router();
-const { allowAccess } = require('../middlewares/allow_access/corsAllow')
+
+router.use(cors());
 
 const {
   getAllCurrencies,
 } = require("../helpers/currencyScrapper/currency_finder");
 
-router.get("/", allowAccess, getAllCurrencies);
+router.get("/", getAllCurrencies);
 
 module.exports = router;
