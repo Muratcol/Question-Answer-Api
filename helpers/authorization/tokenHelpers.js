@@ -1,6 +1,11 @@
 const sendJwtToClient = (user, res) =>{
     //Generate JWT
     const token = user.generateJwtFromUser();
+    const title = user.title ? user.title : null
+    const about = user.about ? user.about : null
+    const website = user.website ? user.website : null
+    const place = user.place ? user.place : null
+
 
     const {JWT_COOKIE, NODE_ENV} = process.env;
     return res
@@ -15,7 +20,12 @@ const sendJwtToClient = (user, res) =>{
         access_token: token,
         data: {
             name: user.name,
-            email: user.email
+            email: user.email,
+            imgUrl: user.profile_image,
+            title: title,
+            about: about,
+            place: place,
+            website: website
         }
     });
 };

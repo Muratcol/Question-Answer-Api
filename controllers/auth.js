@@ -24,7 +24,7 @@ const login = asyncErrorWrapper(async(req, res, next) => {
     const {email, password} = req.body;
     if (!validateUserInput(email, password)) return next(new CustomError("Please check your inputs", 400))
     const user = await User.findOne({email}).select("+password");
-    if (!comparePassword(password, user.password)) return next(new CustomError("Authorization Failed. Check your inputs", 400))
+    if (!comparePassword(password, user.password)) return next(new CustomError("Please check your inputs", 400))
 
     sendJwtToClient(user, res);
 
@@ -140,6 +140,7 @@ const resetpassword = asyncErrorWrapper(async(req, res, next) => {
 // User details update
 const editDetails = asyncErrorWrapper(async(req, res, next) => {
     const editInformation = req.body;
+    console.log(editInformation)
     // const {authorization} = req.body;
     const user = await User.findByIdAndUpdate ( req.user.id, editInformation, {
         new: true,
