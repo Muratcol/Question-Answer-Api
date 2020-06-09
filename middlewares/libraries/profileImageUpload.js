@@ -9,7 +9,8 @@ const CustomError = require('../../helpers/error/CustomError');
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
         const rootDir = path.dirname(require.main.filename);
-        cb(null, path.join(rootDir, "/public/uploads"))
+        // cb(null, path.join(rootDir, "/public/uploads"))
+        cb(null, "C:\\Users\\Murat\\Desktop\\angular\\shop\\src\\assets\\img") //We connected this api to angular
     },
     filename: function(req, file, cb){
         //File - Mimetype - image/png
