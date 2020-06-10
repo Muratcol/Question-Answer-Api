@@ -80,8 +80,8 @@ const forgotPassword = asyncErrorWrapper(async(req, res, next) => {
     if (!user) return next(new CustomError("There is no such a user with this email.", 400));
     const resetPasswordToken = user.getResetPasswordTokenFromUser();
     await user.save();
-
-    const resetPasswordUrl = `http://localhost:5000/api/auth/resetpassword?resetPasswordToken=${resetPasswordToken}`
+    // Below address Angular's password reset address
+    const resetPasswordUrl = `http://localhost:4200/user/resetPassword/${resetPasswordToken}`
 
     const emailTemplate = `
         <h3>Reset Your Password </h3>
