@@ -31,12 +31,17 @@ const getAllCurrencies = asyncErrorWrapper(async (req, res, next) => {
       update: update,
     });
   }
-
   return res.status(200).json({
     success: true,
     data: allCurrencies,
   });
 });
+
+
+
+
+
+
 
 module.exports = {
   getAllCurrencies,

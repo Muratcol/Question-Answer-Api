@@ -3,26 +3,18 @@ const Schema = mongoose.Schema;
 
 
 const CurrencySchema = new Schema({
-    name:{
-        type:String
+    dollar:{
+        type:Object
     },
-    alis:{
-        type:String
+    euro:{
+        type:Object
     },
-    satis:{
-        type:String
+    gbp:{
+        type:Object
     },
-    yuksek:{
-        type:String
-    },
-    dusuk:{
-        type:String
-    },
-    degisim:{
-        type:String
-    },
-    update:{
-        type:String
+    createdAt: {
+        type: Date,
+        default: Date.now,
     }
 });
 
